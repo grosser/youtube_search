@@ -25,10 +25,24 @@ Usage
       ...
     }
 
+page / per_page are supported
+
+    YoutubeSearch.search('cats', :page => 10, :per_page => 4).first
+
+and [standard youtube options](http://code.google.com/apis/youtube/2.0/developers_guide_protocol.html#Standard_parameters)
+
+    YoutubeSearch.search('cats', :page => 10, :per_page => 4).first
+
+I can haz iframe:
+
+    # DISCLAIMER this iframe may steal 4 minutes of your life ;)
+    id = YoutubeSearch.search('lolcats').first['video_id']
+    %{<iframe src="http://www.youtube.com/embed/#{id}" width=640 height=480 frameborder=0></iframe>}
+
 TODO
 ====
  - more detailed xml parsing (atm only name and value is read)
- - parse dates into objects
+ - parse dates into ruby objects
 
 
 Author
