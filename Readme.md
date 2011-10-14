@@ -1,5 +1,9 @@
 Search youtube via this simple ruby api
 
+ - just 10+ LOC
+ - no dependencies
+ - no funky stuff going on
+
 Install
 =======
     sudo gem install youtube_search
@@ -10,7 +14,22 @@ Or
 
 Usage
 =====
-    CODE EXAMPLE
+    YoutubeSearch.search('cats').first
+    {
+      "title"=>"Killer Whale Imitates Boat Motor",
+      "published"=>"2011-09-29T15:30:43.000Z",
+      "id"=>"http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc",
+      "video_id"=>"0b2U5r7Jwkc",
+      "content"=>"Top YouTube Videos on ...",
+      "updated"=>"2011-10-13T20:20:54.000Z",
+      ...
+    }
+
+TODO
+====
+ - more detailed xml parsing (atm only name and value is read)
+ - parse dates into objects
+
 
 Author
 ======
