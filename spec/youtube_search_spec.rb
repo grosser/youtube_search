@@ -27,4 +27,12 @@ describe YoutubeSearch do
   it "can search" do
     YoutubeSearch.search('boat').size.should == 25
   end
+
+  it "can search for complex examples" do
+    YoutubeSearch.search('Left 4 Dead 2').size.should == 25
+  end
+
+  it "can search with options" do
+    YoutubeSearch.search('Left 4 Dead 2', 'max-results' => 2).size.should == 2
+  end
 end

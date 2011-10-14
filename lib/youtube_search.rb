@@ -3,8 +3,9 @@ require 'cgi'
 require 'open-uri'
 
 module YoutubeSearch
-  def self.search(query)
-    xml = open("http://gdata.youtube.com/feeds/api/videos/-/#{CGI.escape(query)}").read
+  def self.search(query, options={})
+    query = options.merge(:q => query).map{|k,v| "#{CGI.escape k.to_s}=#{CGI.escape v.to_s}" }.join('&')
+    xml = open("http://gdata.youtube.com/feeds/api/videos?#{query}").read
     parse(xml)
   end
 
