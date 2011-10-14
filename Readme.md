@@ -14,7 +14,7 @@ Or
 
 Usage
 =====
-    YoutubeSearch.search('cats').first
+    YoutubeSearch.search('boat').first
     {
       "title"=>"Killer Whale Imitates Boat Motor",
       "published"=>"2011-09-29T15:30:43.000Z",
