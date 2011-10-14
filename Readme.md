@@ -31,7 +31,7 @@ page / per_page are supported
 
 and [standard youtube options](http://code.google.com/apis/youtube/2.0/developers_guide_protocol.html#Standard_parameters)
 
-    YoutubeSearch.search('cats', :page => 10, :per_page => 4).first
+    YoutubeSearch.search('cats', 'time' => 'this_week', 'orderby' => 'viewCount').first
 
 I can haz iframe:
 
