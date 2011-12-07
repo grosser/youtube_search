@@ -12,10 +12,10 @@ module YoutubeSearch
 
   def self.playlist(playlist_id)
     xml = open("https://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
-    parse(xml, playlist)
+    parse(xml, true)
   end
 
-  def self.parse(xml)
+  def self.parse(xml, playlist = false)
     entries = []
     doc = REXML::Document.new(xml)
     doc.elements.each('feed/entry') do |p|
@@ -24,8 +24,12 @@ module YoutubeSearch
         [child.name, child.text]
       end]
 
-      videoid = p.elements['*/yt:videoid'].try(:text) || entry['id'].split('/').last
-      puts videoid
+      if playlist
+        videoid = p.elements['*/yt:videoid'].text
+      else
+        videoid = entry['id'].split('/').last
+      end
+
       entry['video_id'] = videoid
       entries << entry
     end
