@@ -33,6 +33,10 @@ and [standard youtube options](http://code.google.com/apis/youtube/2.0/developer
 
     YoutubeSearch.search('cats', 'time' => 'this_week', 'orderby' => 'viewCount').first
 
+Alternatively, you can retrieve videos from a playlist using its ID
+
+    YoutubeSearch.playlist('5F23DAF4BFE3D14C')
+
 I can haz iframe:
 
     # DISCLAIMER this iframe may steal 4 minutes of your life ;)
@@ -52,3 +56,7 @@ michael@grosser.it<br/>
 Hereby placed under public domain, do what you want, just do not hold me accountable...<br/>
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=grosser&url=https://github.com/grosser/youtube_search&title=youtube_search&language=en_US&tags=github&category=software)
 [![Build Status](https://secure.travis-ci.org/grosser/youtube_search.png)](http://travis-ci.org/grosser/youtube_search)
+
+Contributors
+============
+[David Gil](https://qoolife.com)
