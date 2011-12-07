@@ -44,6 +44,12 @@ describe YoutubeSearch do
     end
   end
 
+  describe 'playlist' do
+    it "can retrieve videos from a playlist" do
+      YoutubeSearch.playlist('5F23DAF4BFE3D14C').size.should == 6
+    end
+  end
+
   describe 'options_with_per_page_and_page' do
     it "converts :page and :per_page" do
       YoutubeSearch.send(:options_with_per_page_and_page, {:page => 2, :per_page => 4}).should ==

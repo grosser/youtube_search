@@ -10,6 +10,11 @@ module YoutubeSearch
     parse(xml)
   end
 
+  def self.playlist(playlist_id)
+    xml = open("https://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
+    parse(xml)
+  end
+
   def self.parse(xml)
     entries = []
     doc = REXML::Document.new(xml)
