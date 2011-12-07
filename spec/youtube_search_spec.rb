@@ -6,7 +6,7 @@ describe YoutubeSearch do
   end
 
   describe 'parse' do
-    it "can parse xml" do
+    it "can parse xml from a search" do
       # convert to array so we get a nice diff in case of errors
       YoutubeSearch.parse(File.read('spec/fixtures/search_boat.xml')).first.sort.should == [
         ["author",nil],
@@ -22,6 +22,26 @@ describe YoutubeSearch do
         ["title","Killer Whale Imitates Boat Motor"],
         ["updated","2011-10-14T07:40:00.000Z"],
         ["video_id", "0b2U5r7Jwkc"],
+      ]
+    end
+
+    it "can parse xml from a playlist" do
+      YoutubeSearch.parse(File.read('spec/fixtures/playlist_5F23DAF4BFE3D14C.xml'), true).first.sort.should == [
+        ["accessControl",nil],
+        ["author",nil],
+        ["category", nil],
+        ["comments",nil],
+        ["group", nil],
+        ["id","tag:youtube.com,2008:playlist:5F23DAF4BFE3D14C:kRk0fUfl9UJvHjGFHgPSakUFmztBgGKG"],
+        ["link",nil],
+        ["position","1"],
+        ["rating", nil],
+        ["recorded", "2010-01-08"],
+        ["statistics",nil],
+        ["title","Osteopatia y terapias manuales"],
+        ["updated","2011-12-07T01:46:21.650Z"],
+        ["video_id", "5wU-yHnq7Hs"],
+        ["where", nil]
       ]
     end
   end
