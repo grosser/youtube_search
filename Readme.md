@@ -1,8 +1,7 @@
 Search youtube via this simple ruby api
 
- - just 10+ LOC
+ - simple
  - no dependencies
- - no funky stuff going on
 
 Install
 =======
@@ -33,15 +32,15 @@ and [standard youtube options](http://code.google.com/apis/youtube/2.0/developer
 
     YoutubeSearch.search('cats', 'time' => 'this_week', 'orderby' => 'viewCount').first
 
-Alternatively, you can retrieve videos from a playlist using its ID
-
-    YoutubeSearch.playlist('5F23DAF4BFE3D14C')
-
-I can haz iframe:
+### I can haz iframe:
 
     # DISCLAIMER this iframe may steal 4 minutes of your life ;)
     id = YoutubeSearch.search('lolcats').first['video_id']
     %{<iframe src="http://www.youtube.com/embed/#{id}" width=640 height=480 frameborder=0></iframe>}
+
+### Retrieve videos by playlist ID
+
+    videos = YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C')
 
 TODO
 ====
