@@ -16,25 +16,34 @@ module YoutubeSearch
   end
 
   def self.parse(xml, options={})
-    entries = []
-    doc = REXML::Document.new(xml)
-    doc.elements.each('feed/entry') do |element|
-      entry = Hash[element.children.map do |child|
-        [child.name, child.text]
-      end]
-
+    elements_in(xml, 'feed/entry').map do |element|
+      entry = xml_to_hash(element)
       entry['video_id'] = if options[:type] == :playlist
         element.elements['*/yt:videoid'].text
       else
         entry['id'].split('/').last
       end
 
-      entries << entry
+      entry
+    end
+  end
+
+  private
+
+  def self.elements_in(xml, selector)
+    entries = []
+    doc = REXML::Document.new(xml)
+    doc.elements.each(selector) do |element|
+      entries << element
     end
     entries
   end
 
-  private
+  def self.xml_to_hash(element)
+    Hash[element.children.map do |child|
+      [child.name, child.text]
+    end]
+  end
 
   def self.options_with_per_page_and_page(options)
     options = options.dup
