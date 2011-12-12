@@ -10,33 +10,40 @@ module YoutubeSearch
     parse(xml)
   end
 
-  def self.playlist(playlist_id)
+  def self.playlist_videos(playlist_id)
     xml = open("https://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
-    parse(xml, true)
+    parse(xml, :type => :playlist)
   end
 
-  def self.parse(xml, playlist = false)
-    entries = []
-    doc = REXML::Document.new(xml)
-    doc.elements.each('feed/entry') do |p|
-
-      entry = Hash[p.children.map do |child|
-        [child.name, child.text]
-      end]
-
-      if playlist
-        videoid = p.elements['*/yt:videoid'].text
+  def self.parse(xml, options={})
+    elements_in(xml, 'feed/entry').map do |element|
+      entry = xml_to_hash(element)
+      entry['video_id'] = if options[:type] == :playlist
+        element.elements['*/yt:videoid'].text
       else
-        videoid = entry['id'].split('/').last
+        entry['id'].split('/').last
       end
 
-      entry['video_id'] = videoid
-      entries << entry
+      entry
+    end
+  end
+
+  private
+
+  def self.elements_in(xml, selector)
+    entries = []
+    doc = REXML::Document.new(xml)
+    doc.elements.each(selector) do |element|
+      entries << element
     end
     entries
   end
 
-  private
+  def self.xml_to_hash(element)
+    Hash[element.children.map do |child|
+      [child.name, child.text]
+    end]
+  end
 
   def self.options_with_per_page_and_page(options)
     options = options.dup

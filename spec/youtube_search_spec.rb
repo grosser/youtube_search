@@ -26,7 +26,7 @@ describe YoutubeSearch do
     end
 
     it "can parse xml from a playlist" do
-      YoutubeSearch.parse(File.read('spec/fixtures/playlist_5F23DAF4BFE3D14C.xml'), true).first.sort.should == [
+      YoutubeSearch.parse(File.read('spec/fixtures/playlist_5F23DAF4BFE3D14C.xml'), :type => :playlist).first.sort.should == [
         ["accessControl",nil],
         ["author",nil],
         ["category", nil],
@@ -64,9 +64,9 @@ describe YoutubeSearch do
     end
   end
 
-  describe 'playlist' do
+  describe 'playlist_videos' do
     it "can retrieve videos from a playlist" do
-      YoutubeSearch.playlist('5F23DAF4BFE3D14C').size.should == 6
+      YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C').size.should == 6
     end
   end
 
