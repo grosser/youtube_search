@@ -59,3 +59,7 @@ michael@grosser.it<br/>
 Hereby placed under public domain, do what you want, just do not hold me accountable...<br/>
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=grosser&url=https://github.com/grosser/youtube_search&title=youtube_search&language=en_US&tags=github&category=software)
 [![Build Status](https://secure.travis-ci.org/grosser/youtube_search.png)](http://travis-ci.org/grosser/youtube_search)
+
+Contributors
+============
+[David Gil](https://qoolife.com)
