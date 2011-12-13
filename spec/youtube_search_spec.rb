@@ -68,6 +68,12 @@ describe YoutubeSearch do
     it "can retrieve videos from a playlist" do
       YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C').size.should == 6
     end
+
+    it "can retrieve videos from a playlist with new-style ids" do
+      id = 'PL5F23DAF4BFE3D14C'
+      YoutubeSearch.playlist_videos(id).size.should == 6
+      id.should == 'PL5F23DAF4BFE3D14C'
+    end
   end
 
   describe 'options_with_per_page_and_page' do
