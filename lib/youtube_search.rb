@@ -12,7 +12,7 @@ module YoutubeSearch
 
   def self.playlist_videos(playlist_id)
     playlist_id = playlist_id.sub(/^PL/, "")
-    xml = open("https://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
+    xml = open("http://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
     parse(xml, :type => :playlist)
   end
 
@@ -24,6 +24,8 @@ module YoutubeSearch
       else
         entry['id'].split('/').last
       end
+
+      entry['duration'] = element.elements['*/yt:duration'].attributes['seconds'] unless element.elements['*/yt:duration'].nil?
 
       entry
     end
