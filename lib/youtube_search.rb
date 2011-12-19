@@ -25,6 +25,8 @@ module YoutubeSearch
         entry['id'].split('/').last
       end
 
+      entry['duration'] = element.elements['*/yt:duration'].attributes['seconds'] unless element.elements['*/yt:duration'].nil?
+
       entry
     end
   end
