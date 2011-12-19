@@ -12,7 +12,7 @@ module YoutubeSearch
 
   def self.playlist_videos(playlist_id)
     playlist_id = playlist_id.sub(/^PL/, "")
-    xml = open("https://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
+    xml = open("http://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2").read
     parse(xml, :type => :playlist)
   end
 
