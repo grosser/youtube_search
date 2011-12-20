@@ -9,13 +9,14 @@ describe YoutubeSearch do
     it "can parse xml from a search" do
       # convert to array so we get a nice diff in case of errors
       video = YoutubeSearch.parse(File.read('spec/fixtures/search_boat.xml')).first
-      video['content'].should == "Top YouTube Videos on tubecrunch.blogspot.com A killer whale swims right up to a boat and shows off his best sounding motor impression."
-      video['duration'].should == "75"
-      video['id'].should == "http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc"
-      video['published'].should == "2011-09-29T15:30:43.000Z"
-      video['title'].should == "Killer Whale Imitates Boat Motor"
-      video['updated'].should == "2011-10-14T07:40:00.000Z"
-      video['video_id'].should == "0b2U5r7Jwkc"
+      video["content"].should == "Top YouTube Videos on tubecrunch.blogspot.com A killer whale swims right up to a boat and shows off his best sounding motor impression."
+      video["duration"].should == "75"
+      video["id"].should == "http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc"
+      video["published"].should == "2011-09-29T15:30:43.000Z"
+      video["title"].should == "Killer Whale Imitates Boat Motor"
+      video["updated"].should == "2011-10-14T07:40:00.000Z"
+      video["video_id"].should == "0b2U5r7Jwkc"
+      video["raw"].elements.should_not == nil
     end
 
     it "can parse xml from a playlist" do
@@ -27,6 +28,7 @@ describe YoutubeSearch do
       video["title"].should == "Osteopatia y terapias manuales"
       video["updated"].should == "2011-12-07T01:46:21.650Z"
       video["video_id"].should == "5wU-yHnq7Hs"
+      video["raw"].elements.should_not == nil
     end
   end
 

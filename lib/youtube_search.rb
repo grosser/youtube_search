@@ -28,6 +28,8 @@ module YoutubeSearch
       duration = element.elements['*/yt:duration']
       entry['duration'] = duration.attributes['seconds'] if duration
 
+      entry['raw'] = element
+
       entry
     end
   end

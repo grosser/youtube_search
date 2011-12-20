@@ -21,6 +21,7 @@ Usage
       "video_id"=>"0b2U5r7Jwkc",
       "content"=>"Top YouTube Videos on ...",
       "updated"=>"2011-10-13T20:20:54.000Z",
+      "raw" => <REXML::Element ... >,
       ...
     }
 
@@ -44,7 +45,7 @@ and [standard youtube options](http://code.google.com/apis/youtube/2.0/developer
 
 TODO
 ====
- - more detailed xml parsing (atm only name and value is read)
+ - more detailed xml parsing (you can fetch everything via 'raw', but more defaults would be nice)
  - parse dates into ruby objects
 
 
