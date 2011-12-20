@@ -8,43 +8,25 @@ describe YoutubeSearch do
   describe 'parse' do
     it "can parse xml from a search" do
       # convert to array so we get a nice diff in case of errors
-      YoutubeSearch.parse(File.read('spec/fixtures/search_boat.xml')).first.sort.should == [
-        ["author",nil],
-        ["category", nil],
-        ["comments",nil],
-        ["content","Top YouTube Videos on tubecrunch.blogspot.com A killer whale swims right up to a boat and shows off his best sounding motor impression."],
-        ["duration", "75"],
-        ["group", nil],
-        ["id","http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc"],
-        ["link",nil],
-        ["published","2011-09-29T15:30:43.000Z"],
-        ["rating", nil],
-        ["statistics",nil],
-        ["title","Killer Whale Imitates Boat Motor"],
-        ["updated","2011-10-14T07:40:00.000Z"],
-        ["video_id", "0b2U5r7Jwkc"],
-      ]
+      video = YoutubeSearch.parse(File.read('spec/fixtures/search_boat.xml')).first
+      video['content'].should == "Top YouTube Videos on tubecrunch.blogspot.com A killer whale swims right up to a boat and shows off his best sounding motor impression."
+      video['duration'].should == "75"
+      video['id'].should == "http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc"
+      video['published'].should == "2011-09-29T15:30:43.000Z"
+      video['title'].should == "Killer Whale Imitates Boat Motor"
+      video['updated'].should == "2011-10-14T07:40:00.000Z"
+      video['video_id'].should == "0b2U5r7Jwkc"
     end
 
     it "can parse xml from a playlist" do
-      YoutubeSearch.parse(File.read('spec/fixtures/playlist_5F23DAF4BFE3D14C.xml'), :type => :playlist).first.sort.should == [
-        ["accessControl",nil],
-        ["author",nil],
-        ["category", nil],
-        ["comments",nil],
-        ["duration", "192"],
-        ["group", nil],
-        ["id","tag:youtube.com,2008:playlist:5F23DAF4BFE3D14C:kRk0fUfl9UJvHjGFHgPSakUFmztBgGKG"],
-        ["link",nil],
-        ["position","1"],
-        ["rating", nil],
-        ["recorded", "2010-01-08"],
-        ["statistics",nil],
-        ["title","Osteopatia y terapias manuales"],
-        ["updated","2011-12-07T01:46:21.650Z"],
-        ["video_id", "5wU-yHnq7Hs"],
-        ["where", nil]
-      ]
+      video = YoutubeSearch.parse(File.read('spec/fixtures/playlist_5F23DAF4BFE3D14C.xml'), :type => :playlist).first
+      video["duration"].should == "192"
+      video["id"].should == "tag:youtube.com,2008:playlist:5F23DAF4BFE3D14C:kRk0fUfl9UJvHjGFHgPSakUFmztBgGKG"
+      video["position"].should == "1"
+      video["recorded"].should == "2010-01-08"
+      video["title"].should == "Osteopatia y terapias manuales"
+      video["updated"].should == "2011-12-07T01:46:21.650Z"
+      video["video_id"].should == "5wU-yHnq7Hs"
     end
   end
 
