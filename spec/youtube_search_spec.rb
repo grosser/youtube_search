@@ -11,6 +11,7 @@ describe YoutubeSearch do
       video = YoutubeSearch.parse(File.read('spec/fixtures/search_boat.xml')).first
       video["content"].should == "Top YouTube Videos on tubecrunch.blogspot.com A killer whale swims right up to a boat and shows off his best sounding motor impression."
       video["duration"].should == "75"
+      video["embeddable"].should == false
       video["id"].should == "http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc"
       video["published"].should == "2011-09-29T15:30:43.000Z"
       video["title"].should == "Killer Whale Imitates Boat Motor"

@@ -28,6 +28,9 @@ module YoutubeSearch
       duration = element.elements['*/yt:duration']
       entry['duration'] = duration.attributes['seconds'] if duration
 
+      no_embed = element.elements['yt:noembed'] || element.elements['yt:private']
+      entry['embeddable'] = !(no_embed)
+
       entry['raw'] = element
 
       entry
