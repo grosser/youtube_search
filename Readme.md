@@ -22,6 +22,7 @@ Usage
       "content"=>"Top YouTube Videos on ...",
       "updated"=>"2011-10-13T20:20:54.000Z",
       "raw" => <REXML::Element ... >,
+      "embeddable" => true,
       ...
     }
 
