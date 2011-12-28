@@ -6,18 +6,38 @@ describe YoutubeSearch do
   end
 
   describe 'parse' do
+    let(:canned_xml){ File.read('spec/fixtures/search_boat.xml') }
+
     it "can parse xml from a search" do
       # convert to array so we get a nice diff in case of errors
-      video = YoutubeSearch.parse(File.read('spec/fixtures/search_boat.xml')).first
+      video = YoutubeSearch.parse(canned_xml).first
       video["content"].should == "Top YouTube Videos on tubecrunch.blogspot.com A killer whale swims right up to a boat and shows off his best sounding motor impression."
       video["duration"].should == "75"
-      video["embeddable"].should == false
       video["id"].should == "http://gdata.youtube.com/feeds/api/videos/0b2U5r7Jwkc"
       video["published"].should == "2011-09-29T15:30:43.000Z"
       video["title"].should == "Killer Whale Imitates Boat Motor"
       video["updated"].should == "2011-10-14T07:40:00.000Z"
       video["video_id"].should == "0b2U5r7Jwkc"
       video["raw"].elements.should_not == nil
+    end
+
+    context "embeddable" do
+      it "is embeddable if neither private nor noembed are set" do
+        video = YoutubeSearch.parse(canned_xml).last
+        video["embeddable"].should == true
+      end
+
+      it "is not embeddable if noembed is set" do
+        xml = canned_xml.sub('</entry>','<yt:noembed/></entry>')
+        video = YoutubeSearch.parse(xml).first
+        video["embeddable"].should == false
+      end
+
+      it "is not embeddable if private is set" do
+        xml = canned_xml.sub('</entry>','<yt:private/></entry>')
+        video = YoutubeSearch.parse(xml).first
+        video["embeddable"].should == false
+      end
     end
 
     it "can parse xml from a playlist" do
