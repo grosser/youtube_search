@@ -40,6 +40,9 @@ and [standard youtube options](http://code.google.com/apis/youtube/2.0/developer
     id = YoutubeSearch.search('lolcats').first['video_id']
     %{<iframe src="http://www.youtube.com/embed/#{id}" width=640 height=480 frameborder=0></iframe>}
 
+### Searching playlists
+	YoutubeSearch.search_playlists('cats').first
+
 ### Retrieve videos by playlist ID
 
     videos = YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C')

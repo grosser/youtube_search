@@ -3,12 +3,22 @@ require 'cgi'
 require 'open-uri'
 
 module YoutubeSearch
-  def self.search(query, options={})
+  def self.search_page(page, query, options={})
     options = options_with_per_page_and_page(options)
     query = options.merge(:q => query).map{|k,v| "#{CGI.escape k.to_s}=#{CGI.escape v.to_s}" }.join('&')
-    xml = open("http://gdata.youtube.com/feeds/api/videos?#{query}").read
+    puts "#{page}?#{query}"
+    xml = open("#{page}?#{query}").read
     parse(xml)
   end
+
+  def self.search(query, options={})
+    search_page("http://gdata.youtube.com/feeds/api/videos", query, options)
+  end
+  
+  def self.search_playlists(query, options={:v => 2})
+    search_page("https://gdata.youtube.com/feeds/api/playlists/snippets", query, options)
+  end
+
 
   def self.playlist_videos(playlist_id)
     playlist_id = playlist_id.sub(/^PL/, "")
