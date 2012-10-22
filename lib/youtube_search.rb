@@ -6,7 +6,6 @@ module YoutubeSearch
   def self.search_page(page, query, options={})
     options = options_with_per_page_and_page(options)
     query = options.merge(:q => query).map{|k,v| "#{CGI.escape k.to_s}=#{CGI.escape v.to_s}" }.join('&')
-    puts "#{page}?#{query}"
     xml = open("#{page}?#{query}").read
     parse(xml)
   end
@@ -15,8 +14,8 @@ module YoutubeSearch
     search_page("http://gdata.youtube.com/feeds/api/videos", query, options)
   end
   
-  def self.search_playlists(query, options={:v => 2})
-    search_page("https://gdata.youtube.com/feeds/api/playlists/snippets", query, options)
+  def self.search_playlists(query, options={})
+    search_page("https://gdata.youtube.com/feeds/api/playlists/snippets", query, options.merge(:v => 2))
   end
 
 

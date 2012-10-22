@@ -51,6 +51,16 @@ describe YoutubeSearch do
       video["video_id"].should == "5wU-yHnq7Hs"
       video["raw"].elements.should_not == nil
     end
+
+    it "can parse xml from playlists search" do
+      playlists = YoutubeSearch.parse(File.read('spec/fixtures/playlist_search_google_developers.xml'))
+      playlists.size.should == 10
+      playlists[0]["id"].should ==  "tag:youtube.com,2008:playlist:snippet:PLB09682344C2F233B"
+      playlists[0]["published"].should == "2010-05-21T05:05:09.000Z"
+      playlists[0]["updated"].should == "2012-08-23T12:33:57.000Z"
+      playlists[0]["title"].should == "Google I/O 2010: Google TV Keynote, Day 2"
+      playlists[0]["playlistId"].should == "PLB09682344C2F233B"
+    end
   end
 
   describe 'search' do
@@ -68,6 +78,20 @@ describe YoutubeSearch do
 
     it "can search with :per_page" do
       YoutubeSearch.search('Left 4 Dead 2', :per_page => 2).size.should == 2
+    end
+  end
+
+  describe 'search_playlists' do
+    it "can search playlists" do
+      YoutubeSearch.search_playlists('GoogleDevelopers').size.should == 25
+    end
+
+    it "can search with options" do
+      YoutubeSearch.search_playlists('GoogleDevelopers', 'max-results' => 2).size.should == 2
+    end
+
+    it "can search with :per_page" do
+      YoutubeSearch.search('GoogleDevelopers', :per_page => 2).size.should == 2
     end
   end
 
