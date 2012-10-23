@@ -59,6 +59,7 @@ Author
 ### [Contributors](http://github.com/grosser/youtube_search/contributors)
  - [David Gil](https://qoolife.com)
  - [Jim Jones](https://github.com/aantix)
+ - [Sławek](https://github.com/sbogutyn)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
