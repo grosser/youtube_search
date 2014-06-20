@@ -105,6 +105,14 @@ describe YoutubeSearch do
       YoutubeSearch.playlist_videos(id).size.should == 6
       id.should == 'PL5F23DAF4BFE3D14C'
     end
+
+    it "can retrieve videos from a playlist in json format" do
+      videos = JSON.parse(
+        YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C', { format: :json })
+      )['feed']['entry']
+      videos.size.should == 6
+    end
+
   end
 
   describe 'options_with_per_page_and_page' do
