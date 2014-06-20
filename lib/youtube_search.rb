@@ -19,13 +19,13 @@ module YoutubeSearch
       search_page("https://gdata.youtube.com/feeds/api/playlists/snippets", query, options.merge(:v => 2))
     end
 
-    def playlist_videos(playlist_id, format='xml')
+    def playlist_videos(playlist_id, options={})
       playlist_id = playlist_id.sub(/^PL/, "")
-      res = open("http://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2#{'&alt=json' if format == 'json'}").read
-      if format == 'xml'
-        parse(res, :type => :playlist)
-      else
+      res = open("http://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2#{'&alt=json' if options[:format] == :json}").read
+      if options[:format] == :json
         res
+      else
+        parse(res, :type => :playlist)
       end
     end
 
