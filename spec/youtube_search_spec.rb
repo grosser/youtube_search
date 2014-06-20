@@ -108,11 +108,10 @@ describe YoutubeSearch do
 
     it "can retrieve videos from a playlist in json format" do
       videos = JSON.parse(
-        YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C', { format: :json })
+        YoutubeSearch.playlist_videos('5F23DAF4BFE3D14C', :format => :json)
       )['feed']['entry']
       videos.size.should == 6
     end
-
   end
 
   describe 'options_with_per_page_and_page' do
