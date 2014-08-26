@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'rexml/document'
 require 'cgi'
 require 'open-uri'
@@ -24,20 +23,12 @@ module YoutubeSearch
 
     def playlist_videos(playlist_id, options={})
       playlist_id = playlist_id.sub(/^PL/, "")
-      format = options[:format]
-
-      videos_by_type type: :playlist,
-        url: "#{API_URL}/playlists/#{playlist_id}?v=2#{'&alt=json' if options[:format] == :json}",
-        format: format
+      videos "#{API_URL}/playlists/#{playlist_id}?v=2", options[:format]
     end
 
     def user_channel_videos(channel_id, options={})
       channel_id = channel_id.sub(/^UC/, "")
-      format = options[:format]
-
-      videos_by_type type: :user_channel,
-        url: "#{API_URL}/users/#{channel_id}/uploads?v=2#{'&alt=json' if format == :json}",
-        format: format
+      videos "#{API_URL}/users/#{channel_id}/uploads?v=2", options[:format]
     end
 
     def parse(xml, options={})
@@ -63,11 +54,8 @@ module YoutubeSearch
 
     private
 
-    def videos_by_type(options={})
-      type   = options[:type]
-      url    = options[:url]
-      format = options[:format]
-
+    def videos(url, format)
+      url += '&alt=json' if format == :json
       res = open(url).read
       if format == :json
         res
