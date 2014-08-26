@@ -26,18 +26,18 @@ module YoutubeSearch
       playlist_id = playlist_id.sub(/^PL/, "")
       format = options[:format]
 
-      videos_by_type type: :playlist,
-        url: "#{API_URL}/playlists/#{playlist_id}?v=2#{'&alt=json' if options[:format] == :json}",
-        format: format
+      videos_by_type :type => :playlist,
+        :url => "#{API_URL}/playlists/#{playlist_id}?v=2#{'&alt=json' if options[:format] == :json}",
+        :format => format
     end
 
     def user_channel_videos(channel_id, options={})
       channel_id = channel_id.sub(/^UC/, "")
       format = options[:format]
 
-      videos_by_type type: :user_channel,
-        url: "#{API_URL}/users/#{channel_id}/uploads?v=2#{'&alt=json' if format == :json}",
-        format: format
+      videos_by_type :type => :user_channel,
+        :url => "#{API_URL}/users/#{channel_id}/uploads?v=2#{'&alt=json' if format == :json}",
+        :format => format
     end
 
     def parse(xml, options={})
