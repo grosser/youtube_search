@@ -76,7 +76,6 @@ Author
  - [Jim Jones](https://github.com/aantix)
  - [Sławek](https://github.com/sbogutyn)
  - [Alex Weidmann](https://github.com/effektz)
- - [David Gil](https://github.com/dgilperez)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
