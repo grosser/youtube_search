@@ -1,8 +1,11 @@
+# encoding: utf-8
 require 'rexml/document'
 require 'cgi'
 require 'open-uri'
 
 module YoutubeSearch
+  API_URL = 'http://gdata.youtube.com/feeds/api'
+
   class << self
     def search_page(page, query, options={})
       options = options_with_per_page_and_page(options)
@@ -12,31 +15,29 @@ module YoutubeSearch
     end
 
     def search(query, options={})
-      search_page("http://gdata.youtube.com/feeds/api/videos", query, options)
+      search_page("#{API_URL}/videos", query, options)
     end
 
     def search_playlists(query, options={})
-      search_page("https://gdata.youtube.com/feeds/api/playlists/snippets", query, options.merge(:v => 2))
+      search_page("#{API_URL}/playlists/snippets", query, options.merge(:v => 2))
     end
 
     def playlist_videos(playlist_id, options={})
       playlist_id = playlist_id.sub(/^PL/, "")
-      res = open("http://gdata.youtube.com/feeds/api/playlists/#{playlist_id}?v=2#{'&alt=json' if options[:format] == :json}").read
-      if options[:format] == :json
-        res
-      else
-        parse(res, :type => :playlist)
-      end
+      format = options[:format]
+
+      videos_by_type type: :playlist,
+        url: "#{API_URL}/playlists/#{playlist_id}?v=2#{'&alt=json' if options[:format] == :json}",
+        format: format
     end
 
     def user_channel_videos(channel_id, options={})
       channel_id = channel_id.sub(/^UC/, "")
-      res = open("http://gdata.youtube.com/feeds/api/users/#{channel_id}/uploads?v=2#{'&alt=json' if options[:format] == :json}").read
-      if options[:format] == :json
-        res
-      else
-        parse(res, :type => :channel)
-      end
+      format = options[:format]
+
+      videos_by_type type: :user_channel,
+        url: "#{API_URL}/users/#{channel_id}/uploads?v=2#{'&alt=json' if format == :json}",
+        format: format
     end
 
     def parse(xml, options={})
@@ -61,6 +62,19 @@ module YoutubeSearch
     end
 
     private
+
+    def videos_by_type(options={})
+      type   = options[:type]
+      url    = options[:url]
+      format = options[:format]
+
+      res = open(url).read
+      if format == :json
+        res
+      else
+        parse res
+      end
+    end
 
     def elements_in(xml, selector)
       entries = []
