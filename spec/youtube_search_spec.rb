@@ -114,6 +114,19 @@ describe YoutubeSearch do
     end
   end
 
+  describe 'user_channel_videos' do
+    it "can retrieve videos from a channel" do
+      YoutubeSearch.user_channel_videos('UCShuVWEZ2KhSb2kAYd7-StQ').size.should == 25
+    end
+
+    it "can retrieve videos from a channel in json format" do
+      videos = JSON.parse(
+        YoutubeSearch.user_channel_videos('UCShuVWEZ2KhSb2kAYd7-StQ', :format => :json)
+      )['feed']['entry']
+      videos.size.should == 25
+    end
+  end
+
   describe 'options_with_per_page_and_page' do
     it "converts :page and :per_page" do
       YoutubeSearch.send(:options_with_per_page_and_page, {:page => 2, :per_page => 4}).should ==

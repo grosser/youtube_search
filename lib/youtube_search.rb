@@ -29,6 +29,16 @@ module YoutubeSearch
       end
     end
 
+    def user_channel_videos(channel_id, options={})
+      channel_id = channel_id.sub(/^UC/, "")
+      res = open("http://gdata.youtube.com/feeds/api/users/#{channel_id}/uploads?v=2#{'&alt=json' if options[:format] == :json}").read
+      if options[:format] == :json
+        res
+      else
+        parse(res, :type => :channel)
+      end
+    end
+
     def parse(xml, options={})
       elements_in(xml, 'feed/entry').map do |element|
         entry = xml_to_hash(element)
