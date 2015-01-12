@@ -32,20 +32,20 @@ module YoutubeSearch
     end
 
     def single(video_id, options={})
-      options.merge!(:key => 'entry')
+      options = options.merge(:key => 'entry')
       videos "#{API_URL}/videos/#{video_id}", :xml, options
     end
 
     def parse(xml, options={})
-      key = options.fetch(:key) { 'feed/entry' }
+      key = options[:key] || 'feed/entry'
 
       elements_in(xml, key).map do |element|
         entry = xml_to_hash(element)
         entry['video_id'] = if options[:type] == :playlist
-            element.elements['*/yt:videoid'].text
-          else
-            entry['id'].split('/').last
-          end
+          element.elements['*/yt:videoid'].text
+        else
+          entry['id'].split('/').last
+        end
 
         duration = element.elements['*/yt:duration']
         entry['duration'] = duration.attributes['seconds'] if duration
