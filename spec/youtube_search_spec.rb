@@ -127,6 +127,12 @@ describe YoutubeSearch do
     end
   end
 
+  describe 'single' do
+    it "can retrieve information from a single video" do
+      YoutubeSearch.single('HkMNOlYcpHg').size.should == 1
+    end
+  end
+
   describe 'options_with_per_page_and_page' do
     it "converts :page and :per_page" do
       YoutubeSearch.send(:options_with_per_page_and_page, {:page => 2, :per_page => 4}).should ==

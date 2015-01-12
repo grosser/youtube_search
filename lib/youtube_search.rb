@@ -31,14 +31,21 @@ module YoutubeSearch
       videos "#{API_URL}/users/#{channel_id}/uploads?v=2", options[:format]
     end
 
+    def single(video_id, options={})
+      options.merge!(:key => 'entry')
+      videos "#{API_URL}/videos/#{video_id}", :xml, options
+    end
+
     def parse(xml, options={})
-      elements_in(xml, 'feed/entry').map do |element|
+      key = options.fetch(:key) { 'feed/entry' }
+
+      elements_in(xml, key).map do |element|
         entry = xml_to_hash(element)
         entry['video_id'] = if options[:type] == :playlist
-          element.elements['*/yt:videoid'].text
-        else
-          entry['id'].split('/').last
-        end
+            element.elements['*/yt:videoid'].text
+          else
+            entry['id'].split('/').last
+          end
 
         duration = element.elements['*/yt:duration']
         entry['duration'] = duration.attributes['seconds'] if duration
@@ -54,13 +61,13 @@ module YoutubeSearch
 
     private
 
-    def videos(url, format)
+    def videos(url, format, options = {})
       url += '&alt=json' if format == :json
       res = open(url).read
       if format == :json
         res
       else
-        parse res
+        parse res, options
       end
     end
 
